@@ -6,7 +6,8 @@
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/halium.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
 
 # Get non-open-source specific aspects
@@ -80,8 +81,8 @@ PRODUCT_PACKAGES += \
     fs_config_files
 
 # ANT+
-PRODUCT_PACKAGES += \
-    AntHalService
+#PRODUCT_PACKAGES += \
+#    AntHalService
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -218,8 +219,8 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.1-service.clearkey
 
 # Doze
-PRODUCT_PACKAGES += \
-    RealmeParts
+#PRODUCT_PACKAGES += \
+#    RealmeParts
 
 # Fingerprint
 PRODUCT_PACKAGES += \
@@ -376,11 +377,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf \
 
 # Telephony
-PRODUCT_PACKAGES += \
-    telephony-ext
+#PRODUCT_PACKAGES += \
+#    telephony-ext
 
-PRODUCT_BOOT_JARS += \
-    telephony-ext
+#PRODUCT_BOOT_JARS += \
+#    telephony-ext
 
 # TextClassifier
 PRODUCT_PACKAGES += \
@@ -431,3 +432,25 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
+
+# systemimage build fix
+PRODUCT_PACKAGES += \
+	fec
+
+# Ubuntu Touch Mir/hybris integration & multimedia playback support
+PRODUCT_PACKAGES += \
+    libmedia_compat_layer \
+    libubuntu_application_api \
+    libdroidmedia \
+    libaudioflingerglue \
+    libminisf \
+    miniafservice \
+    minimediaservice
+
+# Ubuntu Touch/Halium override files
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/init/minimediaservice.rc:system/etc/init/minimediaservice.rc
+
+# Ubuntu Touch additional properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ubuntu.widi.supported=1
